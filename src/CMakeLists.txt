@@ -216,4 +216,5 @@ blt_add_executable(
   SOURCES RAJAPerfSuiteDriver.cpp
   DEPENDS_ON ${RAJA_PERFSUITE_EXECUTABLE_DEPENDS}
   )
+target_link_options(raja-perf.exe PRIVATE -ftrace)
 endif()

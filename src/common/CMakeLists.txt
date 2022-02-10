@@ -6,6 +6,8 @@
 # SPDX-License-Identifier: (BSD-3-Clause)
 ###############################################################################
 
+set_source_files_properties(Executor.cpp.cpp PROPERTIES COMPILE_FLAGS -ftrace)
+
 blt_add_library(
   NAME common
   SOURCES DataUtils.cpp 

@@ -810,7 +810,15 @@ void Executor::runSuite()
            getCout() << getVariantName(vid) << " variant" << endl;
          }
          if ( kern->hasVariantDefined(vid) ) {
+#if defined(__NEC__)
+           const std::string ftrace_region_name =
+               getVariantName(vid) + "_" + kernel->getName();
+           ftrace_region_begin(ftrace_region_name.c_str());
+#endif
            kernels[ik]->execute(vid);
+#if defined(__NEC__)
+           ftrace_region_end(ftrace_region_name.c_str());
+#endif
          }
       } // loop over variants
 

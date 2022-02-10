@@ -108,6 +108,7 @@ void POLYBENCH_HEAT_3D::runOpenMPVariant(VariantID vid)
       break;
     }
 
+#if !defined(__NEC__)
     case RAJA_OpenMP : {
 
       POLYBENCH_HEAT_3D_VIEWS_RAJA;
@@ -152,6 +153,7 @@ void POLYBENCH_HEAT_3D::runOpenMPVariant(VariantID vid)
 
       break;
     }
+#endif
 
     default : {
       getCout() << "\n  POLYBENCH_HEAT_3D : Unknown variant id = " << vid << std::endl;

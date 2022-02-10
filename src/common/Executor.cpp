@@ -16,11 +16,16 @@
 #include <mpi.h>
 #endif
 
+#if defined(__NEC__)
+#include <ftrace.h>
+#endif
+
 // Warmup kernels to run first to help reduce startup overheads in timings
 #include "basic/DAXPY.hpp"
 #include "basic/REDUCE3_INT.hpp"
 #include "algorithm/SORT.hpp"
 
+#include <algorithm>
 #include <list>
 #include <vector>
 #include <string>
@@ -662,12 +667,12 @@ void Executor::writeKernelInfoSummary(ostream& str, bool to_file) const
   Index_type dash_width = 0;
 
   for (size_t ik = 0; ik < kernels.size(); ++ik) {
-    kercol_width = max(kercol_width, kernels[ik]->getName().size());
-    psize_width = max(psize_width, kernels[ik]->getActualProblemSize());
-    reps_width = max(reps_width, kernels[ik]->getRunReps());
-    itsrep_width = max(reps_width, kernels[ik]->getItsPerRep());
-    bytesrep_width = max(bytesrep_width, kernels[ik]->getBytesPerRep());
-    flopsrep_width = max(bytesrep_width, kernels[ik]->getFLOPsPerRep());
+    kercol_width = std::max(kercol_width, kernels[ik]->getName().size());
+    psize_width = std::max(psize_width, kernels[ik]->getActualProblemSize());
+    reps_width = std::max(reps_width, kernels[ik]->getRunReps());
+    itsrep_width = std::max(reps_width, kernels[ik]->getItsPerRep());
+    bytesrep_width = std::max(bytesrep_width, kernels[ik]->getBytesPerRep());
+    flopsrep_width = std::max(bytesrep_width, kernels[ik]->getFLOPsPerRep());
   }
 
   const string sepchr(" , ");
@@ -677,37 +682,37 @@ void Executor::writeKernelInfoSummary(ostream& str, bool to_file) const
 
   double psize = log10( static_cast<double>(psize_width) );
   string psize_head("Problem size");
-  psize_width = max( static_cast<Index_type>(psize_head.size()),
+  psize_width = std::max( static_cast<Index_type>(psize_head.size()),
                      static_cast<Index_type>(psize) ) + 3;
   dash_width += psize_width + static_cast<Index_type>(sepchr.size());
 
   double rsize = log10( static_cast<double>(reps_width) );
   string rsize_head("Reps");
-  reps_width = max( static_cast<Index_type>(rsize_head.size()),
+  reps_width = std::max( static_cast<Index_type>(rsize_head.size()),
                     static_cast<Index_type>(rsize) ) + 3;
   dash_width += reps_width + static_cast<Index_type>(sepchr.size());
 
   double irsize = log10( static_cast<double>(itsrep_width) );
   string itsrep_head("Iterations/rep");
-  itsrep_width = max( static_cast<Index_type>(itsrep_head.size()),
+  itsrep_width = std::max( static_cast<Index_type>(itsrep_head.size()),
                       static_cast<Index_type>(irsize) ) + 3;
   dash_width += itsrep_width + static_cast<Index_type>(sepchr.size());
 
   string kernsrep_head("Kernels/rep");
   Index_type kernsrep_width =
-    max( static_cast<Index_type>(kernsrep_head.size()),
+    std::max( static_cast<Index_type>(kernsrep_head.size()),
          static_cast<Index_type>(4) );
   dash_width += kernsrep_width + static_cast<Index_type>(sepchr.size());
 
   double brsize = log10( static_cast<double>(bytesrep_width) );
   string bytesrep_head("Bytes/rep");
-  bytesrep_width = max( static_cast<Index_type>(bytesrep_head.size()),
+  bytesrep_width = std::max( static_cast<Index_type>(bytesrep_head.size()),
                         static_cast<Index_type>(brsize) ) + 3;
   dash_width += bytesrep_width + static_cast<Index_type>(sepchr.size());
 
   double frsize = log10( static_cast<double>(flopsrep_width) );
   string flopsrep_head("FLOPS/rep");
-  flopsrep_width = max( static_cast<Index_type>(flopsrep_head.size()),
+  flopsrep_width = std::max( static_cast<Index_type>(flopsrep_head.size()),
                          static_cast<Index_type>(frsize) ) + 3;
   dash_width += flopsrep_width + static_cast<Index_type>(sepchr.size());
 
@@ -896,13 +901,13 @@ void Executor::writeCSVReport(ostream& file, CSVRepMode mode,
 
     size_t kercol_width = kernel_col_name.size();
     for (size_t ik = 0; ik < kernels.size(); ++ik) {
-      kercol_width = max(kercol_width, kernels[ik]->getName().size());
+      kercol_width = std::max(kercol_width, kernels[ik]->getName().size());
     }
     kercol_width++;
 
     vector<size_t> varcol_width(variant_ids.size());
     for (size_t iv = 0; iv < variant_ids.size(); ++iv) {
-      varcol_width[iv] = max(prec+2, getVariantName(variant_ids[iv]).size());
+      varcol_width[iv] = std::max(prec+2, getVariantName(variant_ids[iv]).size());
     }
 
     //

@@ -66,7 +66,9 @@ POLYBENCH_2MM::POLYBENCH_2MM(const RunParams& params)
 
   setVariantDefined( Base_OpenMP );
   setVariantDefined( Lambda_OpenMP );
+#if !defined(__NEC__)
   setVariantDefined( RAJA_OpenMP );
+#endif
 
   setVariantDefined( Base_OpenMPTarget );
   setVariantDefined( RAJA_OpenMPTarget );

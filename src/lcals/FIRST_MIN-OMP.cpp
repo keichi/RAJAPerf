@@ -31,6 +31,7 @@ void FIRST_MIN::runOpenMPVariant(VariantID vid)
 
   switch ( vid ) {
 
+#if !defined(__NEC__)
     case Base_OpenMP : {
 
       startTimer();
@@ -83,6 +84,7 @@ void FIRST_MIN::runOpenMPVariant(VariantID vid)
 
       break;
     }
+#endif
 
     case RAJA_OpenMP : {
 

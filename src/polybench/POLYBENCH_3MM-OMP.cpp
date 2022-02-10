@@ -174,6 +174,7 @@ void POLYBENCH_3MM::runOpenMPVariant(VariantID vid)
       break;
     }
 
+#if !defined(__NEC__)
     case RAJA_OpenMP : {
 
       POLYBENCH_3MM_VIEWS_RAJA;
@@ -283,6 +284,7 @@ void POLYBENCH_3MM::runOpenMPVariant(VariantID vid)
 
       break;
     }
+#endif
 
     default : {
       getCout() << "\n  POLYBENCH_2MM : Unknown variant id = " << vid << std::endl;

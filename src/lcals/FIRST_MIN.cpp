@@ -45,7 +45,9 @@ FIRST_MIN::FIRST_MIN(const RunParams& params)
   setVariantDefined( Lambda_Seq );
   setVariantDefined( RAJA_Seq );
 
+#if !defined(__NEC__)
   setVariantDefined( Base_OpenMP );
+#endif
   setVariantDefined( Lambda_OpenMP );
   setVariantDefined( RAJA_OpenMP );
 

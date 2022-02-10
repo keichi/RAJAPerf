@@ -87,6 +87,7 @@ void POLYBENCH_GEMM::runOpenMPVariant(VariantID vid)
       break;
     }
 
+#if !defined(__NEC__)
     case RAJA_OpenMP : {
 
       POLYBENCH_GEMM_VIEWS_RAJA;
@@ -141,6 +142,7 @@ void POLYBENCH_GEMM::runOpenMPVariant(VariantID vid)
 
       break;
     }
+#endif
 
     default : {
       getCout() << "\n  POLYBENCH_GEMM : Unknown variant id = " << vid << std::endl;

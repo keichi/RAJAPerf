@@ -11,6 +11,7 @@
 #include "RunParams.hpp"
 
 #include <cmath>
+#include <algorithm>
 
 namespace rajaperf {
 
